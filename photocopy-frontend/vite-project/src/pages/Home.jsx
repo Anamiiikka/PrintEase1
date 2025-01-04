@@ -10,7 +10,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#1e1e2f] to-[#610361] text-white">
+    <div className="flex justify-center items-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
       <div className="container text-center bg-white/10 p-10 rounded-2xl shadow-xl max-w-md w-4/5">
         <div
           className="w-28 h-28 mx-auto mb-5 rounded-full border-2 border-[#f05454] shadow-lg"
