@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -10,8 +12,8 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Handle login logic (connect to API)
         console.log("Login Data:", formData);
+        navigate("/buyer-dashboard");
     };
 
     return (
@@ -43,7 +45,7 @@ const Login = () => {
                     </button>
                 </form>
                 <p className="mt-4 text-sm text-center">
-                    Dont have an account?{" "}
+                    Don't have an account?{" "}
                     <a href="/register" className="text-blue-500 hover:underline">
                         Register
                     </a>
