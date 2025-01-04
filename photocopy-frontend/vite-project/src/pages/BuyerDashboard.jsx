@@ -18,23 +18,26 @@ const BuyerDashboard = () => {
   ];
 
   const handleChooseShop = (shop) => {
-    navigate("/upload-file", { state: { shop } });
+    navigate("/upload", { state: { shop } });
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">Buyer Dashboard</h1>
-      <p className="text-center text-gray-700 mb-6">Select a shop to place an order.</p>
+    <div className="min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] p-4">
+      <h1 className="text-3xl font-bold text-center mb-6 text-white">Buyer Dashboard</h1>
+      <p className="text-center text-[#F5F5F5] mb-6">Select a shop to place an order.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {shops.map((shop) => (
-          <div key={shop.id} className="bg-white p-4 rounded shadow">
-            <h2 className="text-xl font-semibold">{shop.name}</h2>
-            <p>Location: {shop.location}</p>
-            <p>Price: {shop.price}</p>
+          <div
+            key={shop.id}
+            className="bg-[#F5F5F5] p-3 rounded shadow transition-transform duration-300 ease-in-out transform hover:scale-105"
+          >
+            <h2 className="text-xl font-semibold text-[#333333]">{shop.name}</h2>
+            <p className="text-[#555555]">Location: {shop.location}</p>
+            <p className="text-[#555555]">Price: {shop.price}</p>
             <button
               onClick={() => handleChooseShop(shop)}
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              className="mt-4 bg-[#003366] text-white py-2 px-4 rounded hover:bg-[#004080]"
             >
               Choose Shop
             </button>
