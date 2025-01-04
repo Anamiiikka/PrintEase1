@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthInput from "../components/AuthInput";
+
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -7,11 +9,13 @@ const Login = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle login logic (connect to API)
         console.log("Login Data:", formData);
+        navigate("/buyer-dashboard");
     };
 
     return (

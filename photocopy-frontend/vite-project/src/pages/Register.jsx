@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AuthInput from "../components/AuthInput";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const Register = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -21,6 +23,7 @@ const Register = () => {
         }
         // Handle registration logic (connect to API)
         console.log("Register Data:", formData);
+        navigate("/buyer-dashboard");
     };
 
     return (
