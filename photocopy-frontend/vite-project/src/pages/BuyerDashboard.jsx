@@ -18,7 +18,7 @@ const BuyerDashboard = () => {
   ];
 
   const handleChooseShop = (shop) => {
-    navigate("/upload-file", { state: { shop } });
+    navigate("/upload", { state: { shop } });
   };
 
   return (

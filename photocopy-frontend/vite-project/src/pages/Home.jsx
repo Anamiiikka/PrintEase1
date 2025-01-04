@@ -1,7 +1,13 @@
 import React from "react";
 import logo from "../assets/printease logo.jpg";
 
+import { useNavigate } from "react-router-dom";
+   
 const Home = () => {
+  const navigate = useNavigate();
+  const handleBuyerClick = () => {
+    navigate("/login");
+  };
   return (
     <div className="flex justify-center items-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
       <div className="container text-center bg-[#A9A9A9] p-12 rounded-2xl shadow-2xl max-w-lg w-3/5">
