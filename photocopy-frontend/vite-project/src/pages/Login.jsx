@@ -32,14 +32,14 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
-            <div className="w-full max-w-md p-10 bg-[#D3D3D3] rounded-2xl shadow-2xl">
-                <h2 className="text-3xl font-bold text-center text-[#a68e00]">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-purple-800 text-white">
+            <div className="w-full max-w-md p-10 bg-white rounded-2xl shadow-2xl">
+                <h2 className="text-3xl font-bold text-center text-purple-800">
                     Login
                 </h2>
                 <form onSubmit={handleSubmit} className="mt-4">
                     <div className="mb-4">
-                        <label className="block mb-2 text-sm font-medium text-black">
+                        <label className="block mb-2 text-sm font-medium text-purple-800">
                             Email
                         </label>
                         <input
@@ -48,11 +48,11 @@ const Login = () => {
                             placeholder="Enter your email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-text"
+                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-text"
                         />
                     </div>
                     <div className="mb-4 relative">
-                        <label className="block mb-2 text-sm font-medium text-black">
+                        <label className="block mb-2 text-sm font-medium text-purple-800">
                             Password
                         </label>
                         <input
@@ -61,7 +61,7 @@ const Login = () => {
                             placeholder="Enter your password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-text"
+                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-text"
                         />
                         <button
                             type="button"
@@ -78,14 +78,14 @@ const Login = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 mt-4 text-white bg-gradient-to-br from-[#00adb5] to-[#006e73] shadow-2xl hover:bg-gradient-to-br hover:from-[#1ac1c8] hover:to-[#2e7c7a] transform transition"
+                        className="w-full px-4 py-2 mt-4 text-white bg-gradient-to-br from-purple-600 to-purple-700 shadow-2xl hover:bg-gradient-to-br hover:from-purple-700 hover:to-purple-800 transform transition"
                     >
                         Login
                     </button>
                 </form>
-                <p className="mt-4 text-sm text-center text-black">
+                <p className="mt-4 text-sm text-center text-purple-800">
                     Don't have an account?{" "}
-                    <a href="/register" className="text-blue-500 hover:underline">
+                    <a href="/register" className="text-purple-600 hover:underline">
                         Register
                     </a>
                 </p>
