@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 const SellerLogin = () => {
-  const navigate = useNavigate();
   
+   const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [idError, setIdError] = useState("");
@@ -29,8 +28,9 @@ const SellerLogin = () => {
     if (isValid) {
       console.log("Form submitted:", { id, password });
     }
+    navigate("/seller-dashboard");
   };
-  navigate("/SellerDashboard");
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 via-gray-300 to-gray-400 relative">
