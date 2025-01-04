@@ -13,15 +13,17 @@ const Register = () => {
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
         if (formData.password !== formData.confirmPassword) {
             alert("Passwords do not match!");
             return;
         }
-        // Handle registration logic (connect to API)
+
         console.log("Register Data:", formData);
         navigate("/buyer-dashboard");
     };

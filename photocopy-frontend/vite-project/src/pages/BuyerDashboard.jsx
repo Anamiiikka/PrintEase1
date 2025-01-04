@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 const BuyerDashboard = () => {
   const navigate = useNavigate();
 
-  // Expanded shop list
   const shops = [
     { id: 1, name: "PrintX", location: "JanakPuri", price: "10 per page" },
     { id: 2, name: "Shivam Prints", location: "Rohini-Est", price: "12 per page" },
@@ -18,7 +17,6 @@ const BuyerDashboard = () => {
     { id: 10, name: "SuperFast Print", location: "Aerocity", price: "5 per page" },
   ];
 
-  // Navigate to the upload page with the shop details
   const handleChooseShop = (shop) => {
     navigate("/upload-file", { state: { shop } });
   };
