@@ -8,6 +8,10 @@ const Home = () => {
   const handleBuyerClick = () => {
     navigate("/login");
   };
+  const handleSellerClick = () => {
+    navigate("/seller-login");
+  };
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
@@ -25,7 +29,7 @@ const Home = () => {
         </h1>
         <p className="text-[#d1d1d1] mt-3 text-lg">From Pixels to Prints</p>
         <div className="flex justify-center gap-5 mt-6">
-          <button className="py-3 px-6 text-lg font-semibold uppercase rounded-full bg-gradient-to-br from-[#00adb5] to-[#006e73] shadow-md hover:-translate-y-1 hover:shadow-lg transform transition">
+          <button  onClick={handleSellerClick} className="py-3 px-6 text-lg font-semibold uppercase rounded-full bg-gradient-to-br from-[#00adb5] to-[#006e73] shadow-md hover:-translate-y-1 hover:shadow-lg transform transition">
             Seller
           </button>
           <button

@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import BuyerDashboard from "./pages/BuyerDashboard";
 import Home from "./pages/Home";
 import UploadFile from "./pages/UploadFile";
+import SellerLogin from "./pages/SellerLogin";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
         <Route path="/upload" element={<UploadFile />} />
+        <Route path="/seller-login" element={<SellerLogin />} />
 
       </Routes>
     </Router>
