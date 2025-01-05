@@ -1,8 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Payment = () => {
+  const navigate = useNavigate();
+  const handleOrderConfirmation = () => {
+    navigate("/order-confirmation");
+  };
     const[name, setName] = React.useState('');
     const[email, setEmail] = React.useState('');
     const[amount, setAmount] = React.useState('');
@@ -86,6 +91,7 @@ const Payment = () => {
         </div>
 
         <button
+           onClick={handleOrderConfirmation}
            type='submit'
            disabled={loading}
           className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-3 rounded-lg shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg hover:opacity-90 focus:outline-none focus:ring focus:ring-green-300"

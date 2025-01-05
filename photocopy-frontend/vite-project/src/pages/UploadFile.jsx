@@ -8,6 +8,9 @@ const UploadFile = () => {
   const handleHomeLogin = () => {
     navigate("/");
   };
+  const handlePayment = () => {
+    navigate("/payment");
+  };
   const handleBuyerDashboard = () => {
     navigate("/buyer-dashboard");
   };
@@ -155,6 +158,7 @@ const UploadFile = () => {
 
           {/* Submit Button */}
           <button
+            onClick={handlePayment}
             type="submit"
             className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-700 w-full"
           >
