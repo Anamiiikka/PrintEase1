@@ -8,18 +8,29 @@ const Register = () => {
         email: "",
         password: "",
         phone: "",
+        confirmPassword: "",
+        address: "",
     });
 
     const [passwordError, setPasswordError] = useState("");
+    const navigate = useNavigate();
+    const [formError, setFormError] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        setFormError("");
 
-        // Validate password
-        if (name === "password") {
-            if (value.length < 5) {
+        if (name === "password" || name === "confirmPassword") {
+            const { password, confirmPassword } = formData;
+            const updatedPassword = name === "password" ? value : password;
+            const updatedConfirmPassword =
+                name === "confirmPassword" ? value : confirmPassword;
+
+            if (updatedPassword !== updatedConfirmPassword) {
+                setPasswordError("Passwords do not match!");
+            } else if (updatedPassword.length < 5) {
                 setPasswordError("Password must be at least 5 characters long!");
             } else {
                 setPasswordError("");
@@ -27,11 +38,27 @@ const Register = () => {
         }
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-    
+
+        if (
+            !formData.name ||
+            !formData.email ||
+            !formData.password ||
+            !formData.confirmPassword ||
+            !formData.address
+        ) {
+            setFormError("All fields are required.");
+            return;
+        }
+
+        if (formData.password !== formData.confirmPassword) {
+            setPasswordError("Passwords do not match!");
+            return;
+        }
+
         if (formData.password.length < 5) {
-            alert("Password must be at least 5 characters long!");
+            setPasswordError("Password must be at least 5 characters long!");
             return;
         }
     
@@ -116,8 +143,28 @@ const Register = () => {
                             className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-medium text-black">
+                            Address
+                        </label>
+                        <textarea
+                            name="address"
+                            placeholder="Enter your address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            rows="3"
+                        />
+                    </div>
+                    {formError && (
+                        <p className="text-red-600 text-sm mt-2 text-center">
+                            {formError}
+                        </p>
+                    )}
                     {passwordError && (
-                        <p className="text-red-600 text-sm mt-2">{passwordError}</p>
+                        <p className="text-red-600 text-sm mt-2 text-center">
+                            {passwordError}
+                        </p>
                     )}
                     <button
                         type="submit"

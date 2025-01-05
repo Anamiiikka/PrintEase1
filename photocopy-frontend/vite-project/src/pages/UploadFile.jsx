@@ -1,74 +1,87 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import photoIcon from '../assets/photo.jpg'; // Adjust the path based on your folder structure
 
-
-const App = () => {
-  const [files, setFiles] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    fileType: "",
-  });
-
-  // Create a reference for the file input
-  const fileInputRef = useRef(null);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+const UploadFile = () => {
+  const navigate = useNavigate();
+  const handleHomeLogin = () => {
+    navigate("/"); // Go to home page
   };
+  const handlePayment = () => {
+    navigate("/payment"); // Navigate to payment page
+  };
+  const handleBuyerDashboard = () => {
+    navigate("/buyer-dashboard"); // Navigate to buyer dashboard
+  };
+  
+  const [files, setFiles] = useState([]);
+  const [totalFileSize, setTotalFileSize] = useState(0); // Track total file size
+  const [deliveryOption, setDeliveryOption] = useState(""); // Track delivery option
+
+  const fileInputRef = useRef(null);
+  const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB in bytes
 
   const handleFileChange = (e) => {
-    setFiles([...files, ...e.target.files]);
+    const selectedFiles = Array.from(e.target.files);
+    const newFiles = [];
+    let newSize = totalFileSize;
+
+    selectedFiles.forEach((file) => {
+      if (newSize + file.size <= MAX_FILE_SIZE) {
+        newFiles.push(file);
+        newSize += file.size;
+      } else {
+        alert(`Adding ${file.name} exceeds the total file size limit of 25 MB.`);
+      }
+    });
+
+    setFiles([...files, ...newFiles]);
+    setTotalFileSize(newSize);
   };
 
   const handleDeleteFile = (index) => {
+    const fileToRemove = files[index];
     const updatedFiles = files.filter((_, i) => i !== index);
+
     setFiles(updatedFiles);
+    setTotalFileSize(totalFileSize - fileToRemove.size);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
     console.log("Uploaded Files:", files);
+    console.log("Delivery Option:", deliveryOption);
     alert("Form submitted successfully!");
-    setFormData({ name: "", email: "", fileType: "" });
-    setFiles([]);
+    setFiles([]); // Reset files after submission
+    setTotalFileSize(0); // Reset file size
   };
 
-  // Trigger file input click when upload box is clicked
   const handleUploadBoxClick = () => {
-    fileInputRef.current.click();
+    fileInputRef.current.click(); // Trigger file input click
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-t from-[#d5dee7] via-[#ffafbd] to-[#c9ffbf] flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
         <form onSubmit={handleSubmit}>
-          {/* Header */}
           <div className="flex items-center justify-center mb-6">
             <img src={photoIcon} alt="icon" className="w-10 h-10 mr-4" />
-            <h1 className="text-xl font-bold text-gray-700">
-              Send us your Files!
-            </h1>
+            <h1 className="text-xl font-bold text-gray-700">Send us your Files!</h1>
           </div>
 
           {/* File Upload Section */}
           <div>
-            <label
-              htmlFor="file-upload"
-              className="block text-left text-gray-700 font-medium mb-2"
-            >
+            <label htmlFor="file-upload" className="block text-left text-gray-700 font-medium mb-2">
               Upload your files here
             </label>
             <div
               className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer"
-              onClick={handleUploadBoxClick} // Trigger file input on click
+              onClick={handleUploadBoxClick}
             >
               <input
                 type="file"
                 id="file-upload"
-                ref={fileInputRef} // Attach ref to the input
+                ref={fileInputRef}
                 className="hidden"
                 multiple
                 onChange={handleFileChange}
@@ -81,6 +94,7 @@ const App = () => {
           {/* File List */}
           {files.length > 0 && (
             <div className="mt-4">
+              <p className="text-gray-700 font-medium">Total File Size: {(totalFileSize / 1024 / 1024).toFixed(2)} MB</p>
               {files.map((file, index) => (
                 <div
                   key={index}
@@ -101,8 +115,40 @@ const App = () => {
             </div>
           )}
 
+          {/* Delivery Option Section */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Choose Delivery Option
+            </label>
+            <div className="flex items-center gap-6">
+              <label className="flex items-center text-gray-700">
+                <input
+                  type="radio"
+                  name="deliveryOption"
+                  value="pickup"
+                  checked={deliveryOption === "pickup"}
+                  onChange={() => setDeliveryOption("pickup")}
+                  className="mr-2"
+                />
+                Pickup from shop
+              </label>
+              <label className="flex items-center text-gray-700">
+                <input
+                  type="radio"
+                  name="deliveryOption"
+                  value="homeDelivery"
+                  checked={deliveryOption === "homeDelivery"}
+                  onChange={() => setDeliveryOption("homeDelivery")}
+                  className="mr-2"
+                />
+                Home delivery
+              </label>
+            </div>
+          </div>
+
           {/* Submit Button */}
           <button
+            onClick={handlePayment}
             type="submit"
             className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-700 w-full"
           >
@@ -112,9 +158,7 @@ const App = () => {
 
         {/* Features Section */}
         <div className="mt-8">
-          <h2 className="text-center text-lg font-bold text-gray-700 mb-4">
-            Features
-          </h2>
+          <h2 className="text-center text-lg font-bold text-gray-700 mb-4">Features</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center">
               <span className="text-3xl">🛡️</span>
@@ -129,46 +173,36 @@ const App = () => {
             <div className="text-center">
               <span className="text-3xl">💰</span>
               <h3 className="font-bold text-gray-700 mt-2">Lowest Prices</h3>
-              <p className="text-gray-500">Printout starting at ₹3</p>
+              <p className="text-gray-500">Printout starting at ₹10</p>
             </div>
           </div>
         </div>
 
         {/* FAQ Section */}
         <div className="mt-8">
-          <h2 className="text-center text-lg font-bold text-gray-700 mb-4">
-            Frequently Asked Questions
-          </h2>
+          <h2 className="text-center text-lg font-bold text-gray-700 mb-4">Frequently Asked Questions</h2>
           <details className="mb-2">
             <summary className="font-bold">1. What file formats can I print?</summary>
-            <p className="ml-4 text-gray-600">
-              JPG, JPEG, PNG, PDF and many more.
-            </p>
+            <p className="ml-4 text-gray-600">JPG, JPEG, PNG, PDF, DOCX and many more.</p>
           </details>
           <details className="mb-2">
             <summary className="font-bold">2. What printing options can I choose from?</summary>
-            <p className="ml-4 text-gray-600">
-              Black & White, Colour, Portrait, Landscape, Paper size A4 only.
-            </p>
+            <p className="ml-4 text-gray-600">Black & White, Colour, Portrait, Landscape, Paper size A4 only.</p>
           </details>
           <details className="mb-2">
             <summary className="font-bold">3. How do I upload my documents?</summary>
-            <p className="ml-4 text-gray-600">
-              Upload through Blinkit app or web interface. Files are auto-deleted post delivery.
-            </p>
+            <p className="ml-4 text-gray-600">Upload through Blinkit app or web interface. Files are auto-deleted post delivery.</p>
           </details>
           <details className="mb-2">
             <summary className="font-bold">4. How secure is my data?</summary>
-            <p className="ml-4 text-gray-600">
-              Your data is safely stored and auto-deleted post delivery.
-            </p>
+            <p className="ml-4 text-gray-600">Your data is safely stored and auto-deleted post delivery.</p>
           </details>
         </div>
 
         {/* Footer Section */}
         <footer className="mt-8 flex justify-around text-blue-600">
-          <button>🏠 Home</button>
-          <button>🛒 Order Again</button>
+          <button onClick={handleHomeLogin}>🏠 Home</button>
+          <button onClick={handleBuyerDashboard}>🛒 Order Again</button>
           <button>📂 Categories</button>
           <button>🖨️ Print</button>
         </footer>
@@ -177,7 +211,4 @@ const App = () => {
   );
 };
 
-export default App;
-
-
-
+export default UploadFile;

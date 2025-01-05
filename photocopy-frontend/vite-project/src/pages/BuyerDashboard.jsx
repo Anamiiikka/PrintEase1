@@ -22,22 +22,22 @@ const BuyerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] p-4">
-      <h1 className="text-3xl font-bold text-center mb-6 text-white">Buyer Dashboard</h1>
-      <p className="text-center text-[#F5F5F5] mb-6">Select a shop to place an order.</p>
+    <div className="min-h-screen bg-gradient-to-r from-[#E0BBE4] to-[#FAD0C4] p-4">
+      <h1 className="text-3xl font-bold text-center mb-6 text-[#6A0DAD]">Buyer Dashboard</h1>
+      <p className="text-center text-[#555555] mb-6">Select a shop to place an order.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {shops.map((shop) => (
           <div
             key={shop.id}
-            className="bg-[#F5F5F5] p-3 rounded shadow transition-transform duration-300 ease-in-out transform hover:scale-105"
+            className="bg-white p-3 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out transform hover:scale-105"
           >
-            <h2 className="text-xl font-semibold text-[#333333]">{shop.name}</h2>
+            <h2 className="text-xl font-semibold text-[#6A0DAD]">{shop.name}</h2>
             <p className="text-[#555555]">Location: {shop.location}</p>
             <p className="text-[#555555]">Price: {shop.price}</p>
             <button
               onClick={() => handleChooseShop(shop)}
-              className="mt-4 bg-[#003366] text-white py-2 px-4 rounded hover:bg-[#004080]"
+              className="mt-4 bg-[#6A0DAD] text-white py-2 px-4 rounded hover:bg-[#9B30FF] transition-all duration-300"
             >
               Choose Shop
             </button>
