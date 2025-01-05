@@ -2,7 +2,7 @@ import React from 'react';
 
 const OrderConfirmation = () => {
   return (
-    <div className="bg-purple-700 flex justify-center items-center h-screen m-0 p-0">
+    <div className="bg-cover bg-center relative bg-[url('./public/bg.png')] flex justify-center items-center h-screen m-0 p-0">
       <div className="bg-white p-10 rounded-2xl shadow-lg text-center max-w-lg w-11/12">
         <div className="text-6xl text-purple-700 mb-6">✔</div>
         <h1 className="text-3xl font-semibold text-purple-700 mb-4">Order Confirmed!</h1>

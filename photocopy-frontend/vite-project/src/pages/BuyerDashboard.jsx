@@ -22,22 +22,26 @@ const BuyerDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-[#E0BBE4] to-[#FAD0C4] p-4">
-      <h1 className="text-3xl font-bold text-center mb-6 text-[#6A0DAD]">Buyer Dashboard</h1>
-      <p className="text-center text-[#555555] mb-6">Select a shop to place an order.</p>
+    <div className="min-h-screen bg-pink-50 p-6">
+      <h1 className="text-4xl font-extrabold text-center mb-8 text-purple-dark">
+        Buyer Dashboard
+      </h1>
+      <p className="text-center text-gray-600 mb-8 text-lg">
+        Browse shops and select one to place your order.
+      </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {shops.map((shop) => (
           <div
             key={shop.id}
-            className="bg-white p-3 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out transform hover:scale-105"
+            className="bg-purple-p3 p-5 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 transform hover:scale-105 border-t-4 border-purple-dark"
           >
-            <h2 className="text-xl font-semibold text-[#6A0DAD]">{shop.name}</h2>
-            <p className="text-[#555555]">Location: {shop.location}</p>
-            <p className="text-[#555555]">Price: {shop.price}</p>
+            <h2 className="text-2xl font-semibold text-purple-dark">{shop.name}</h2>
+            <p className="text-gray-600 mt-2">📍 {shop.location}</p>
+            <p className="text-gray-600 mt-1">💵 {shop.price}</p>
             <button
               onClick={() => handleChooseShop(shop)}
-              className="mt-4 bg-[#6A0DAD] text-white py-2 px-4 rounded hover:bg-[#9B30FF] transition-all duration-300"
+              className="mt-5 bg-purple-dark text-white py-2 px-4 rounded-full hover:bg-purple-600 transition-all duration-300 w-full"
             >
               Choose Shop
             </button>

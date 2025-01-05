@@ -40,7 +40,7 @@ const Payment = () => {
    };
  
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-5">
+    <div className="min-h-screen bg-cover bg-center relative bg-[url('./public/bg.png')] flex items-center justify-center p-5">
       <div className="bg-white shadow-lg rounded-lg p-8 max-w-md w-full transform transition duration-500 hover:scale-105">
         <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center animate-fadeIn">Make a Payment</h1>
         <form onSubmit={handleSubmit}>
@@ -94,7 +94,7 @@ const Payment = () => {
            onClick={handleOrderConfirmation}
            type='submit'
            disabled={loading}
-          className="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold py-3 rounded-lg shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg hover:opacity-90 focus:outline-none focus:ring focus:ring-green-300"
+          className="w-full bg-gradient-to-r from-violet-300 to-purple-dark text-black font-semibold py-3 rounded-lg shadow-md transform transition duration-300 hover:scale-105 hover:shadow-lg hover:opacity-90 focus:outline-none focus:ring focus:ring-green-300"
         >
           Pay Now
         </button>
