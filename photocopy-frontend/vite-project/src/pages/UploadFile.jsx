@@ -95,7 +95,7 @@ const UploadFile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-t from-[#d5dee7] via-[#ffafbd] to-[#c9ffbf] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-cover bg-center relative bg-[url('./public/bg.png')] flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
         <form onSubmit={handleSubmit}>
           <div className="flex items-center justify-center mb-6">

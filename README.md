@@ -2,7 +2,7 @@
 
 PrintEase is an online platform that connects buyers and sellers of printing services. The platform allows buyers to order print jobs from various shops and sellers to manage their shops and process orders from buyers. The flow of the website is designed to be user-friendly, offering distinct paths for buyers and sellers.
 
-![alt text](image.png)
+![alt text](PrintEase/homepage.png)
 
 ## Flow of Website
 
@@ -37,7 +37,7 @@ Once the order is confirmed, the seller is notified and can view the order detai
 
 - **Frontend:** React.js, TailwindCSS
 - **Backend:** Node.js, Express.js
-- **Payment Gateway** : Integrate PhonePe using reactjs and nodejs
+- **Payment Gateway** 
 - **Database:** MongoDB
 
 ## Features
