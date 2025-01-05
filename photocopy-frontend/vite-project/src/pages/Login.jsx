@@ -32,9 +32,9 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-purple-800 text-white">
-            <div className="w-full max-w-md p-10 bg-white rounded-2xl shadow-2xl">
-                <h2 className="text-3xl font-bold text-center text-purple-800">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-600 to-purple-800 text-white animate__animated animate__fadeIn">
+            <div className="w-full max-w-md p-10 bg-white rounded-2xl shadow-2xl transform transition-transform duration-500 hover:scale-105">
+                <h2 className="text-3xl font-bold text-center text-purple-800 animate__animated animate__fadeIn">
                     Login
                 </h2>
                 <form onSubmit={handleSubmit} className="mt-4">
@@ -48,7 +48,7 @@ const Login = () => {
                             placeholder="Enter your email"
                             value={formData.email}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-text"
+                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-text transform transition-all duration-300 ease-in-out hover:shadow-lg"
                         />
                     </div>
                     <div className="mb-4 relative">
@@ -61,12 +61,12 @@ const Login = () => {
                             placeholder="Enter your password"
                             value={formData.password}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-text"
+                            className="w-full px-4 py-2 text-gray-900 bg-white rounded focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-text transform transition-all duration-300 ease-in-out hover:shadow-lg"
                         />
                         <button
                             type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute top-9 right-3 text-gray-600 focus:outline-none"
+                            className="absolute top-9 right-3 text-gray-600 focus:outline-none hover:text-purple-600 transform transition-all duration-200"
                         >
                             {showPassword ? <FaEyeSlash /> : <FaEye />}
                         </button>
@@ -78,14 +78,14 @@ const Login = () => {
                     </div>
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 mt-4 text-white bg-gradient-to-br from-purple-600 to-purple-700 shadow-2xl hover:bg-gradient-to-br hover:from-purple-700 hover:to-purple-800 transform transition"
+                        className="w-full px-4 py-2 mt-4 text-white bg-gradient-to-br from-purple-600 to-purple-700 shadow-2xl hover:bg-gradient-to-br hover:from-purple-700 hover:to-purple-800 transform transition-all duration-300 ease-in-out hover:scale-105"
                     >
                         Login
                     </button>
                 </form>
                 <p className="mt-4 text-sm text-center text-purple-800">
                     Don't have an account?{" "}
-                    <a href="/register" className="text-purple-600 hover:underline">
+                    <a href="/register" className="text-purple-600 hover:underline transform transition-all duration-300 ease-in-out hover:text-purple-800">
                         Register
                     </a>
                 </p>
