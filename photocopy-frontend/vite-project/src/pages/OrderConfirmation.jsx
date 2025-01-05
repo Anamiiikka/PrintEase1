@@ -23,7 +23,7 @@ const OrderConfirmation = () => {
         </div>
         <div className="mt-8">
           <a 
-            href="index.html" 
+            href="/" 
             className="text-white bg-purple-700 py-3 px-8 rounded-lg text-lg inline-block transition duration-300 ease-in-out hover:bg-purple-600 transform hover:translate-y-1 shadow-md"
           >
             Back to Home
