@@ -10,7 +10,7 @@ const Home = () => {
   };
 
   const handleUserClick = () => {
-    navigate("/user-login");
+    navigate("/login");
   };
 
   return (
