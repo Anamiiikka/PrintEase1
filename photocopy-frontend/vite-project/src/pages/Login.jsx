@@ -37,7 +37,7 @@ const Login = () => {
 
         try {
             const response = await axios.post(
-                "/login",
+                "/api/v1/users/login",
                 {
                     email: formData.email,
                     password: formData.password,

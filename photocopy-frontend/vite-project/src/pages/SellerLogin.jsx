@@ -64,7 +64,7 @@ const SellerLogin = () => {
               Forgot Password?
             </a>
           </div>
-          <button
+          <button 
             type="submit"
             className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
           >
@@ -72,9 +72,9 @@ const SellerLogin = () => {
           </button>
         </form>
         <p className="text-center text-sm mt-4">
-          Don't have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
-            Sign up
+          Dont have an account?{" "}
+          <a href="/seller-register" className="text-blue-500 hover:underline">
+            Register 
           </a>
         </p>
       </div>
