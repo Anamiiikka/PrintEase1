@@ -27,8 +27,17 @@ const SellerLogin = () => {
 
     if (isValid) {
       console.log("Form submitted:", { id, password });
+
+      // Assuming a mock seller object (replace with real data from backend or auth system)
+      const seller = {
+        name: "Jerry",
+        
+        
+      };
+
+      // Navigate to the seller dashboard with seller data
+      navigate("/seller-dashboard", { state: { seller } });
     }
-    navigate("/seller-dashboard");
   };
 
   return (
@@ -66,17 +75,15 @@ const SellerLogin = () => {
           </div>
           <button 
             type="submit"
-            className="w-full bg-purple-dark
-            
-            hover:bg-purple-p1 text-white py-2 px-4 rounded"
+            className="w-full bg-purple-dark hover:bg-purple-p1 text-white py-2 px-4 rounded"
           >
             Login
           </button>
         </form>
         <p className="text-center text-sm mt-4">
-          Dont have an account?{" "}
+          Don't have an account?{" "}
           <a href="/seller-register" className="text-blue-500 hover:underline">
-            Register 
+            Register
           </a>
         </p>
       </div>
