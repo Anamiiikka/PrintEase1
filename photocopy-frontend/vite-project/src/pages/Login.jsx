@@ -24,7 +24,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.email || !formData.password) {
-            setFormError("Please fill in all fields.");
+            setFormError("Please fill in all fields."); // Set form error if fields are empty
             return;
         }
         if (passwordError) {
