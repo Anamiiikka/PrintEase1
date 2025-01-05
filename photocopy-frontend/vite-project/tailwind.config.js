@@ -5,14 +5,14 @@ module.exports = {
     extend: {
       colors : {
         
-          purple: {
-            dark: "#514354",
-            light: "#EAE2ED",
-            p1: "#86728B",
-            p2: "#BAA7BF",
-            p3: "#D7C9DB",
-         
-        },
+        purple: {
+          dark: "#514354",
+          light: "#EAE2ED",
+          p1: "#86728B",
+          p2: "#BAA7BF",
+          p3: "#D7C9DB",
+       
+      },
       },
       animation: {
         fadeInLeft: "fadeInLeft 1s ease-in-out",

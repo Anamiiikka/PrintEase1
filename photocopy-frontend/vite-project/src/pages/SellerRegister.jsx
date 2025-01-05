@@ -74,7 +74,7 @@ const SellerRegister = () => {
       // Handle successful form submission logic here (e.g., API request)
       console.log('Form Submitted', formData);
     }
-    navigate("/seller-dashboard");
+    navigate("/");
   };
 
   return (
