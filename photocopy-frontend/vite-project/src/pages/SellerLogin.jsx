@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const SellerLogin = () => {
-  
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [idError, setIdError] = useState("");
@@ -30,17 +30,11 @@ const SellerLogin = () => {
     }
     navigate("/seller-dashboard");
   };
-  
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 via-gray-300 to-gray-400 relative">
-      {/* Abstract shapes */}
-      <div className="absolute w-32 h-32 bg-blue-200 rounded-full top-10 left-10 blur-xl opacity-50"></div>
-      <div className="absolute w-40 h-40 bg-green-300 rounded-full bottom-10 right-10 blur-xl opacity-50"></div>
-      <div className="absolute w-24 h-24 bg-purple-400 rounded-full top-1/3 left-1/3 blur-xl opacity-50"></div>
-
+    <div className="flex items-center justify-center min-h-screen bg-cover bg-center relative bg-[url('./public/bg.png')]">
       {/* Form container */}
-      <div className="bg-white p-8 rounded shadow-lg w-full max-w-sm z-10">
+      <div className="bg-white bg-opacity-80 p-8 rounded shadow-lg w-full max-w-sm z-10">
         <h2 className="text-2xl font-bold text-center mb-6">Seller Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
@@ -78,9 +72,9 @@ const SellerLogin = () => {
           </button>
         </form>
         <p className="text-center text-sm mt-4">
-          Dont have an account?{" "}
-          <a href="/seller-register" className="text-blue-500 hover:underline">
-            Register
+          Don't have an account?{" "}
+          <a href="#" className="text-blue-500 hover:underline">
+            Sign up
           </a>
         </p>
       </div>
