@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import AuthInput from "../components/AuthInput";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -10,8 +9,29 @@ const Register = () => {
         confirmPassword: "",
     });
 
+    const [passwordError, setPasswordError] = useState("");
+
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+
+        // If the password or confirmPassword field is changed, sync the confirm password field
+        if (name === "password") {
+            setFormData({ ...formData, confirmPassword: value });
+        }
+
+        // Check if passwords match and meet the length requirement
+        if (name === "password" || name === "confirmPassword") {
+            const { password, confirmPassword } = formData;
+
+            if (password !== confirmPassword) {
+                setPasswordError("Passwords do not match!");
+            } else if (password.length < 5) {
+                setPasswordError("Password must be at least 5 characters long!");
+            } else {
+                setPasswordError("");
+            }
+        }
     };
 
     const navigate = useNavigate();
@@ -19,8 +39,14 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // Final validation before submission
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
+            setPasswordError("Passwords do not match!");
+            return;
+        }
+
+        if (formData.password.length < 5) {
+            alert("Password must be at least 5 characters long!");
             return;
         }
 
@@ -29,50 +55,75 @@ const Register = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-100">
-            <div className="w-full max-w-md p-6 bg-white rounded shadow-md">
-                <h2 className="text-2xl font-bold text-center">Register</h2>
+        <div className="flex items-center justify-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
+            <div className="w-full max-w-md p-10 bg-[#D3D3D3] rounded-2xl shadow-2xl">
+                <h2 className="text-3xl font-bold text-center text-[#a68e00]">
+                    Register
+                </h2>
                 <form onSubmit={handleSubmit} className="mt-4">
-                    <AuthInput
-                        label="Name"
-                        type="text"
-                        name="name"
-                        placeholder="Enter your name"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                    <AuthInput
-                        label="Email"
-                        type="email"
-                        name="email"
-                        placeholder="Enter your email"
-                        value={formData.email}
-                        onChange={handleChange}
-                    />
-                    <AuthInput
-                        label="Password"
-                        type="password"
-                        name="password"
-                        placeholder="Enter your password"
-                        value={formData.password}
-                        onChange={handleChange}
-                    />
-                    <AuthInput
-                        label="Confirm Password"
-                        type="password"
-                        name="confirmPassword"
-                        placeholder="Confirm your password"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                    />
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-medium text-black">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-medium text-black">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-medium text-black">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            value={formData.password}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-medium text-black">
+                            Confirm Password
+                        </label>
+                        <input
+                            type="password"
+                            name="confirmPassword"
+                            placeholder="Confirm your password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    {passwordError && (
+                        <p className="text-red-600 text-sm mt-2">{passwordError}</p>
+                    )}
                     <button
                         type="submit"
-                        className="w-full px-4 py-2 mt-4 text-white bg-blue-500 rounded hover:bg-blue-600"
+                        className="w-full px-4 py-2 mt-6 text-lg font-semibold uppercase bg-gradient-to-br from-[#00adb5] to-[#006e73] text-white rounded-lg shadow-lg hover:bg-gradient-to-br hover:from-[#1ac1c8] hover:to-[#2e7c7a] transform transition"
                     >
                         Register
                     </button>
                 </form>
-                <p className="mt-4 text-sm text-center">
+                <p className="mt-6 text-sm text-center text-black">
                     Already have an account?{" "}
                     <a href="/login" className="text-blue-500 hover:underline">
                         Login
