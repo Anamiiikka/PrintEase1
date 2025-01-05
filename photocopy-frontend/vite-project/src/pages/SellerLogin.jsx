@@ -79,8 +79,8 @@ const SellerLogin = () => {
         </form>
         <p className="text-center text-sm mt-4">
           Dont have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
-            Sign up
+          <a href="/seller-register" className="text-blue-500 hover:underline">
+            Register
           </a>
         </p>
       </div>

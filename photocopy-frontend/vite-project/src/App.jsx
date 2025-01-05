@@ -8,6 +8,7 @@ import UploadFile from "./pages/UploadFile";
 import SellerLogin from "./pages/SellerLogin";
 import Payment from "./pages/Payment";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import SellerRegister from "./pages/SellerRegister";
 
 
 const App = () => {
@@ -20,6 +21,8 @@ const App = () => {
         <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
         <Route path="/upload" element={<UploadFile />} />
         <Route path="/seller-login" element={<SellerLogin />} />
+        <Route path="/seller-register" element={<SellerRegister />} />
+
         <Route path="/payment" element={<Payment />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
 
