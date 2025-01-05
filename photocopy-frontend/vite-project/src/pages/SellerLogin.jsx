@@ -66,7 +66,9 @@ const SellerLogin = () => {
           </div>
           <button 
             type="submit"
-            className="w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+            className="w-full bg-purple-dark
+            
+            hover:bg-purple-p1 text-white py-2 px-4 rounded"
           >
             Login
           </button>

@@ -3,6 +3,17 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      colors : {
+        
+        purple: {
+          dark: "#514354",
+          light: "#EAE2ED",
+          p1: "#86728B",
+          p2: "#BAA7BF",
+          p3: "#D7C9DB",
+       
+      },
+      },
       animation: {
         fadeInLeft: "fadeInLeft 1s ease-in-out",
         fadeInRight: "fadeInRight 1s ease-in-out",
@@ -21,9 +32,7 @@ module.exports = {
           "0%": { opacity: "0", transform: "translateY(20px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        colors:{
-          purple: '#5955B3'
-        },
+        
       },
     },
   },

@@ -18,7 +18,7 @@ const Register = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // Update formData state
+        // Update formData state and register
         const updatedFormData = { ...formData, [name]: value };
         setFormData(updatedFormData);
         setFormError("");
