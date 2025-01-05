@@ -15,7 +15,7 @@ const Register = () => {
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
     const [formError, setFormError] = useState("");
-    const navigate = useNavigate();
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,7 +38,7 @@ const Register = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
 
         if (
