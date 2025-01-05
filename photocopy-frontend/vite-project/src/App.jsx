@@ -18,7 +18,6 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/buyer-dashboard" element={<BuyerDashboard />} />
         <Route path="/upload" element={<UploadFile />} />
-        {/* <Route path="/seller-signup" element={<SellerSignup />} /> */}
         <Route path="/seller-login" element={<SellerLogin />} />
         <Route path="/payment" element={<Payment />} />
 
