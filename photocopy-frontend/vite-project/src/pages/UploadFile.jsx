@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import photoIcon from '../assets/photo.jpg'; // Adjust the path based on your folder structure
 
 
-const App = () => {
+const UploadFile = () => {
   const navigate = useNavigate();
   const handleHomeLogin = () => {
     navigate("/");
@@ -83,7 +83,7 @@ const App = () => {
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-3xl">
         <form onSubmit={handleSubmit}>
           <div className="flex items-center justify-center mb-6">
-            <img src="picture.jpg" alt="icon" className="w-10 h-10 mr-4" />
+            <img src={photoIcon} alt="icon" className="w-10 h-10 mr-4" />
             <h1 className="text-xl font-bold text-gray-700">Send us your Files!</h1>
           </div>
 
