@@ -6,12 +6,12 @@ const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState("");
+    const [formError, setFormError] = useState("");
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-
-        // Validate password length
+        setFormError("");
         if (e.target.name === "password") {
             const password = e.target.value;
             setPasswordError(password.length >= 5 ? "" : "Password must be at least 5 characters long.");
@@ -20,13 +20,14 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-        // Ensure password meets criteria before proceeding
+        if (!formData.email || !formData.password) {
+            setFormError("Please fill in all fields.");
+            return;
+        }
         if (passwordError) {
             alert("Please correct the password issue before proceeding.");
             return;
         }
-
         console.log("Login Data:", formData);
         navigate("/buyer-dashboard");
     };
@@ -76,6 +77,11 @@ const Login = () => {
                             </p>
                         )}
                     </div>
+                    {formError && (
+                        <p className="text-red-600 text-sm mt-2 text-center">
+                            {formError}
+                        </p>
+                    )}
                     <button
                         type="submit"
                         className="w-full px-4 py-2 mt-4 text-white bg-gradient-to-br from-purple-600 to-purple-700 shadow-2xl hover:bg-gradient-to-br hover:from-purple-700 hover:to-purple-800 transform transition-all duration-300 ease-in-out hover:scale-105"

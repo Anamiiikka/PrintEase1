@@ -10,23 +10,23 @@ const Register = () => {
     });
 
     const [passwordError, setPasswordError] = useState("");
+    const [formError, setFormError] = useState("");
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
+        setFormError("");
 
-        // If the password or confirmPassword field is changed, sync the confirm password field
-        if (name === "password") {
-            setFormData({ ...formData, confirmPassword: value });
-        }
-
-        // Check if passwords match and meet the length requirement
         if (name === "password" || name === "confirmPassword") {
             const { password, confirmPassword } = formData;
+            const updatedPassword = name === "password" ? value : password;
+            const updatedConfirmPassword =
+                name === "confirmPassword" ? value : confirmPassword;
 
-            if (password !== confirmPassword) {
+            if (updatedPassword !== updatedConfirmPassword) {
                 setPasswordError("Passwords do not match!");
-            } else if (password.length < 5) {
+            } else if (updatedPassword.length < 5) {
                 setPasswordError("Password must be at least 5 characters long!");
             } else {
                 setPasswordError("");
@@ -34,19 +34,21 @@ const Register = () => {
         }
     };
 
-    const navigate = useNavigate();
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Final validation before submission
+        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+            setFormError("All fields are required.");
+            return;
+        }
+
         if (formData.password !== formData.confirmPassword) {
             setPasswordError("Passwords do not match!");
             return;
         }
 
         if (formData.password.length < 5) {
-            alert("Password must be at least 5 characters long!");
+            setPasswordError("Password must be at least 5 characters long!");
             return;
         }
 
@@ -113,8 +115,15 @@ const Register = () => {
                             className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
+                    {formError && (
+                        <p className="text-red-600 text-sm mt-2 text-center">
+                            {formError}
+                        </p>
+                    )}
                     {passwordError && (
-                        <p className="text-red-600 text-sm mt-2">{passwordError}</p>
+                        <p className="text-red-600 text-sm mt-2 text-center">
+                            {passwordError}
+                        </p>
                     )}
                     <button
                         type="submit"
