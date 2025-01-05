@@ -1,8 +1,17 @@
 import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import photoIcon from '../assets/photo.jpg'; // Adjust the path based on your folder structure
 
 
 const App = () => {
+  const navigate = useNavigate();
+  const handleHomeLogin = () => {
+    navigate("/");
+  };
+  const handleBuyerDashboard = () => {
+    navigate("/buyer-dashboard");
+  };
+  
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
@@ -129,7 +138,7 @@ const App = () => {
             <div className="text-center">
               <span className="text-3xl">💰</span>
               <h3 className="font-bold text-gray-700 mt-2">Lowest Prices</h3>
-              <p className="text-gray-500">Printout starting at ₹3</p>
+              <p className="text-gray-500">Printout starting at ₹10</p>
             </div>
           </div>
         </div>
@@ -167,8 +176,8 @@ const App = () => {
 
         {/* Footer Section */}
         <footer className="mt-8 flex justify-around text-blue-600">
-          <button>🏠 Home</button>
-          <button>🛒 Order Again</button>
+          <button onClick={handleHomeLogin}>🏠 Home</button>
+          <button onClick={handleBuyerDashboard}>🛒 Order Again</button>
           <button>📂 Categories</button>
           <button>🖨️ Print</button>
         </footer>
