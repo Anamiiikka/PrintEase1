@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SellerRegister = () => {
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     businessName: '',
     location: '',
     password: '',
-    confirmPassword: ''
+    phone: ''
   });
 
   const [errors, setErrors] = useState({
@@ -18,7 +19,7 @@ const SellerRegister = () => {
     businessName: '',
     location: '',
     password: '',
-    confirmPassword: ''
+    phone: ''
   });
 
   const handleChange = (e) => {
@@ -26,7 +27,7 @@ const SellerRegister = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let formValid = true;
     const newErrors = { ...errors };
@@ -62,19 +63,35 @@ const SellerRegister = () => {
       formValid = false;
     }
 
-    // Confirm Password Validation
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+    // Phone Validation
+    const phoneRegex = /^[0-9]{10}$/; // Assuming a 10-digit phone number format
+    if (!formData.phone || !phoneRegex.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
       formValid = false;
     }
 
     setErrors(newErrors);
 
     if (formValid) {
-      // Handle successful form submission logic here (e.g., API request)
-      console.log('Form Submitted', formData);
+      try {
+        const response = await axios.post(
+          "/api/v1/users/sellerregister", // Replace with your backend URL
+          formData
+        );
+
+        console.log("Registration successful:", response.data);
+
+        // Redirect to seller dashboard or login page after successful registration
+        navigate("/seller-login");
+      } catch (error) {
+        console.error("Error during registration:", error);
+        if (error.response) {
+          alert(error.response.data.message || "Registration failed. Please try again.");
+        } else {
+          alert("An error occurred. Please try again later.");
+        }
+      }
     }
-    navigate("/seller-dashboard");
   };
 
   return (
@@ -142,6 +159,21 @@ const SellerRegister = () => {
             {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
           </div>
 
+          {/* Phone */}
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+              placeholder="1234567890"
+            />
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+          </div>
+
           {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
@@ -155,21 +187,6 @@ const SellerRegister = () => {
               placeholder="Enter your password"
             />
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
-          </div>
-
-          {/* Confirm Password */}
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-              placeholder="Confirm your password"
-            />
-            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
           </div>
 
           <button

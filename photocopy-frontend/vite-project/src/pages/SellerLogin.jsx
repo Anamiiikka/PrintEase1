@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SellerLogin = () => {
   const navigate = useNavigate();
@@ -7,14 +8,17 @@ const SellerLogin = () => {
   const [password, setPassword] = useState("");
   const [idError, setIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
-  const handleSubmit = (event) => {
+  const [serverError, setServerError] = useState("");
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let isValid = true;
 
+    // Reset errors
     setIdError("");
     setPasswordError("");
+    setServerError("");
 
+    // Validation
     if (!id.includes("@")) {
       setIdError("Please enter a valid email address.");
       isValid = false;
@@ -26,10 +30,33 @@ const SellerLogin = () => {
     }
 
     if (isValid) {
-      console.log("Form submitted:", { id, password });
+      try {
+        const response = await axios.post(
+          "/api/v1/users/sellerlogin", // Replace with your backend URL
+          { email: id, password }
+        );
+
+        // Handle successful login
+        console.log("Login successful:", response.data);
+
+        // Store token in local storage or cookies
+        localStorage.setItem("token", response.data.token);
+
+        // Navigate to seller dashboard
+        navigate("/seller-dashboard");
+      } catch (error) {
+        console.error("Error during login:", error);
+        if (error.response) {
+          setServerError(error.response.data.message || "Login failed.");
+        } else {
+          setServerError("An error occurred. Please try again later.");
+        }
+      }
     }
-    navigate("/seller-dashboard");
   };
+
+  //axios
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-cover bg-center relative bg-[url('./public/bg.png')]">
