@@ -53,7 +53,7 @@ const Register = () => {
 
         try {
             const response = await axios.post(
-                "/api/v1/users/register",
+               "/register",
                 {
                     fullname: formData.name,
                     email: formData.email,
