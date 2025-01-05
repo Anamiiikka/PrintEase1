@@ -37,7 +37,7 @@ Once the order is confirmed, the seller is notified and can view the order detai
 
 - **Frontend:** React.js, TailwindCSS
 - **Backend:** Node.js, Express.js
-- **Payment Gateway** 
+- **Payment Gateway** : Integrate PhonePe using reactjs and nodejs
 - **Database:** MongoDB
 
 ## Features
