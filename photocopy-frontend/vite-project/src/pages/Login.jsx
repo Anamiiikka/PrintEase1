@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState("");
+    const [loginError, setLoginError] = useState("");  //backend error message
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -18,7 +20,7 @@ const Login = () => {
         }
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
 
         // Ensure password meets criteria before proceeding
@@ -26,9 +28,24 @@ const Login = () => {
             alert("Please correct the password issue before proceeding.");
             return;
         }
+        try{
+            const response=await axios.post(
+                "/api/v1/users/login",
+                {
+                    email:formData.email,
+                    password:formData.password
+                },
+                {withCredentials:true}
+            );
+            console.log("Login Successful:", response.data);
+            alert("Login successful!");
+            navigate("/buyer-dashboard");
+        }catch(error){
+            console.error("Error:", error.response?.data || error.message);
+            alert(error.response?.data?.message || "Something went wrong!");
+        }
 
-        console.log("Login Data:", formData);
-        navigate("/buyer-dashboard");
+      
     };
 
     return (

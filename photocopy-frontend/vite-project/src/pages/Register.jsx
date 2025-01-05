@@ -1,32 +1,25 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Register = () => {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
-        confirmPassword: "",
+        phone: "",
     });
 
     const [passwordError, setPasswordError] = useState("");
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
 
-        // If the password or confirmPassword field is changed, sync the confirm password field
+        // Validate password
         if (name === "password") {
-            setFormData({ ...formData, confirmPassword: value });
-        }
-
-        // Check if passwords match and meet the length requirement
-        if (name === "password" || name === "confirmPassword") {
-            const { password, confirmPassword } = formData;
-
-            if (password !== confirmPassword) {
-                setPasswordError("Passwords do not match!");
-            } else if (password.length < 5) {
+            if (value.length < 5) {
                 setPasswordError("Password must be at least 5 characters long!");
             } else {
                 setPasswordError("");
@@ -34,25 +27,35 @@ const Register = () => {
         }
     };
 
-    const navigate = useNavigate();
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Final validation before submission
-        if (formData.password !== formData.confirmPassword) {
-            setPasswordError("Passwords do not match!");
-            return;
-        }
-
+    
         if (formData.password.length < 5) {
             alert("Password must be at least 5 characters long!");
             return;
         }
-
-        console.log("Register Data:", formData);
-        navigate("/buyer-dashboard");
+    
+        try {
+            const response = await axios.post(
+               "/api/v1/users/register",
+                {
+                    fullname: formData.name,
+                    email: formData.email,
+                    password: formData.password,
+                    phone: formData.phone,
+                },
+                { withCredentials: true }
+            );
+    
+            console.log("Registration Successful:", response.data);
+            alert("Registration successful!");
+            navigate("/buyer-dashboard");
+        } catch (error) {
+            console.error("Error:", error.response?.data || error.message);
+            alert(error.response?.data?.message || "Something went wrong!");
+        }
     };
+    
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
@@ -102,13 +105,13 @@ const Register = () => {
                     </div>
                     <div className="mb-4">
                         <label className="block mb-2 text-sm font-medium text-black">
-                            Confirm Password
+                            Phone
                         </label>
                         <input
-                            type="password"
-                            name="confirmPassword"
-                            placeholder="Confirm your password"
-                            value={formData.confirmPassword}
+                            type="text"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            value={formData.phone}
                             onChange={handleChange}
                             className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
