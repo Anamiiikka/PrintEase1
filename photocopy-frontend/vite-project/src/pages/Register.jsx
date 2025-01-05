@@ -8,29 +8,24 @@ const Register = () => {
         email: "",
         password: "",
         phone: "",
-        confirmPassword: "",
-        address: "",
+        address: "", // Address field included here
     });
 
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate();
     const [formError, setFormError] = useState("");
-    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+
+        // Update formData state
+        const updatedFormData = { ...formData, [name]: value };
+        setFormData(updatedFormData);
         setFormError("");
 
-        if (name === "password" || name === "confirmPassword") {
-            const { password, confirmPassword } = formData;
-            const updatedPassword = name === "password" ? value : password;
-            const updatedConfirmPassword =
-                name === "confirmPassword" ? value : confirmPassword;
-
-            if (updatedPassword !== updatedConfirmPassword) {
-                setPasswordError("Passwords do not match!");
-            } else if (updatedPassword.length < 5) {
+        // Password validation logic
+        if (name === "password") {
+            if (value.length < 5) {
                 setPasswordError("Password must be at least 5 characters long!");
             } else {
                 setPasswordError("");
@@ -38,22 +33,16 @@ const Register = () => {
         }
     };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (
             !formData.name ||
             !formData.email ||
             !formData.password ||
-            !formData.confirmPassword ||
-            !formData.address
+            !formData.address // Ensure address is filled
         ) {
             setFormError("All fields are required.");
-            return;
-        }
-
-        if (formData.password !== formData.confirmPassword) {
-            setPasswordError("Passwords do not match!");
             return;
         }
 
@@ -61,19 +50,20 @@ const Register = () => {
             setPasswordError("Password must be at least 5 characters long!");
             return;
         }
-    
+
         try {
             const response = await axios.post(
-               "/api/v1/users/register",
+                "/api/v1/users/register",
                 {
                     fullname: formData.name,
                     email: formData.email,
                     password: formData.password,
                     phone: formData.phone,
+                    address: formData.address, // Include address in API request
                 },
                 { withCredentials: true }
             );
-    
+
             console.log("Registration Successful:", response.data);
             alert("Registration successful!");
             navigate("/buyer-dashboard");
@@ -82,7 +72,6 @@ const Register = () => {
             alert(error.response?.data?.message || "Something went wrong!");
         }
     };
-    
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-[linear-gradient(to_right,_rgb(55,_59,_68),_rgb(66,_134,_244))] text-white">
@@ -129,6 +118,11 @@ const Register = () => {
                             onChange={handleChange}
                             className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
+                        {passwordError && (
+                            <p className="text-red-600 text-sm mt-2">
+                                {passwordError}
+                            </p>
+                        )}
                     </div>
                     <div className="mb-4">
                         <label className="block mb-2 text-sm font-medium text-black">
@@ -159,11 +153,6 @@ const Register = () => {
                     {formError && (
                         <p className="text-red-600 text-sm mt-2 text-center">
                             {formError}
-                        </p>
-                    )}
-                    {passwordError && (
-                        <p className="text-red-600 text-sm mt-2 text-center">
-                            {passwordError}
                         </p>
                     )}
                     <button

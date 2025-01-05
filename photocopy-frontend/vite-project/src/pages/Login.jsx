@@ -7,46 +7,45 @@ const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [passwordError, setPasswordError] = useState("");
-    const [loginError, setLoginError] = useState("");  //backend error message
+    const [formError, setFormError] = useState(""); // Added this line
+    const [loginError, setLoginError] = useState(""); // Backend error message
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        setFormError("");
+        setFormError(""); // Reset form error on input change
         if (e.target.name === "password") {
             const password = e.target.value;
             setPasswordError(password.length >= 5 ? "" : "Password must be at least 5 characters long.");
         }
     };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if (!formData.email || !formData.password) {
-            setFormError("Please fill in all fields.");
+            setFormError("Please fill in all fields."); // Set form error if fields are empty
             return;
         }
         if (passwordError) {
             alert("Please correct the password issue before proceeding.");
             return;
         }
-        try{
-            const response=await axios.post(
+        try {
+            const response = await axios.post(
                 "/api/v1/users/login",
                 {
-                    email:formData.email,
-                    password:formData.password
+                    email: formData.email,
+                    password: formData.password,
                 },
-                {withCredentials:true}
+                { withCredentials: true }
             );
             console.log("Login Successful:", response.data);
             alert("Login successful!");
             navigate("/buyer-dashboard");
-        }catch(error){
+        } catch (error) {
             console.error("Error:", error.response?.data || error.message);
             alert(error.response?.data?.message || "Something went wrong!");
         }
-
-      
     };
 
     return (

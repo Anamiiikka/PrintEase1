@@ -23,11 +23,11 @@ const generateaccesandrefreshtoken=async( userId)=>{
 
 const registerUser = asyncHandler(async (req, res) => {
     console.log(req.body);
-  const {fullname,email,password,phone}=req.body;
+  const {fullname,email,password,phone,address}=req.body;
   
 //check for empty
   if(
-    [fullname,email,password,phone].some((field)=>field?.trim()==="")
+    [fullname,email,password,phone,address].some((field)=>field?.trim()==="")
   ){
     throw new ApiError(400,"All fields are required")
   }
@@ -43,7 +43,8 @@ const registerUser = asyncHandler(async (req, res) => {
         fullname,
         email,
         password,
-        phone
+        phone,
+        address
     })
 
     console.log('User created:', user);
