@@ -7,6 +7,7 @@ const Register = () => {
         email: "",
         password: "",
         confirmPassword: "",
+        address: "",
     });
 
     const [passwordError, setPasswordError] = useState("");
@@ -37,7 +38,13 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!formData.name || !formData.email || !formData.password || !formData.confirmPassword) {
+        if (
+            !formData.name ||
+            !formData.email ||
+            !formData.password ||
+            !formData.confirmPassword ||
+            !formData.address
+        ) {
             setFormError("All fields are required.");
             return;
         }
@@ -113,6 +120,19 @@ const Register = () => {
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block mb-2 text-sm font-medium text-black">
+                            Address
+                        </label>
+                        <textarea
+                            name="address"
+                            placeholder="Enter your address"
+                            value={formData.address}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 text-black bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                            rows="3"
                         />
                     </div>
                     {formError && (

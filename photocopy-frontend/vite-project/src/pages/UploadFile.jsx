@@ -2,52 +2,36 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import photoIcon from '../assets/photo.jpg'; // Adjust the path based on your folder structure
 
-
 const UploadFile = () => {
   const navigate = useNavigate();
   const handleHomeLogin = () => {
-    navigate("/");
+    navigate("/"); // Go to home page
   };
   const handlePayment = () => {
-    navigate("/payment");
+    navigate("/payment"); // Navigate to payment page
   };
   const handleBuyerDashboard = () => {
-    navigate("/buyer-dashboard");
+    navigate("/buyer-dashboard"); // Navigate to buyer dashboard
   };
   
   const [files, setFiles] = useState([]);
   const [totalFileSize, setTotalFileSize] = useState(0); // Track total file size
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    fileType: "",
-  });
+  const [deliveryOption, setDeliveryOption] = useState(""); // Track delivery option
 
   const fileInputRef = useRef(null);
   const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25 MB in bytes
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    const allowedFileType = formData.fileType;
-
-    let newFiles = [];
+    const newFiles = [];
     let newSize = totalFileSize;
 
     selectedFiles.forEach((file) => {
-      if (!allowedFileType || file.type.includes(allowedFileType)) {
-        if (newSize + file.size <= MAX_FILE_SIZE) {
-          newFiles.push(file);
-          newSize += file.size;
-        } else {
-          alert(`Adding ${file.name} exceeds the total file size limit of 25 MB.`);
-        }
+      if (newSize + file.size <= MAX_FILE_SIZE) {
+        newFiles.push(file);
+        newSize += file.size;
       } else {
-        alert(`${file.name} does not match the selected file type: ${allowedFileType}`);
+        alert(`Adding ${file.name} exceeds the total file size limit of 25 MB.`);
       }
     });
 
@@ -65,20 +49,15 @@ const UploadFile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
     console.log("Uploaded Files:", files);
+    console.log("Delivery Option:", deliveryOption);
     alert("Form submitted successfully!");
-    setFormData({ name: "", email: "", fileType: "" });
-    setFiles([]);
-    setTotalFileSize(0);
+    setFiles([]); // Reset files after submission
+    setTotalFileSize(0); // Reset file size
   };
 
   const handleUploadBoxClick = () => {
-    if (!formData.fileType) {
-      alert("Please select a file type before uploading.");
-      return;
-    }
-    fileInputRef.current.click();
+    fileInputRef.current.click(); // Trigger file input click
   };
 
   return (
@@ -88,26 +67,6 @@ const UploadFile = () => {
           <div className="flex items-center justify-center mb-6">
             <img src={photoIcon} alt="icon" className="w-10 h-10 mr-4" />
             <h1 className="text-xl font-bold text-gray-700">Send us your Files!</h1>
-          </div>
-
-          {/* File Type Selection */}
-          <div className="mb-4">
-            <label htmlFor="fileType" className="block text-gray-700 font-medium mb-2">
-              Select File Type
-            </label>
-            <select
-              id="fileType"
-              name="fileType"
-              value={formData.fileType}
-              onChange={handleInputChange}
-              className="border border-gray-300 rounded-lg p-2 w-full"
-              required
-            >
-              <option value="">-- Select File Type --</option>
-              <option value="image">Images (JPG, PNG)</option>
-              <option value="pdf">PDF Files</option>
-              <option value="word">Word Files (DOCX)</option>
-            </select>
           </div>
 
           {/* File Upload Section */}
@@ -155,6 +114,37 @@ const UploadFile = () => {
               ))}
             </div>
           )}
+
+          {/* Delivery Option Section */}
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-2">
+              Choose Delivery Option
+            </label>
+            <div className="flex items-center gap-6">
+              <label className="flex items-center text-gray-700">
+                <input
+                  type="radio"
+                  name="deliveryOption"
+                  value="pickup"
+                  checked={deliveryOption === "pickup"}
+                  onChange={() => setDeliveryOption("pickup")}
+                  className="mr-2"
+                />
+                Pickup from shop
+              </label>
+              <label className="flex items-center text-gray-700">
+                <input
+                  type="radio"
+                  name="deliveryOption"
+                  value="homeDelivery"
+                  checked={deliveryOption === "homeDelivery"}
+                  onChange={() => setDeliveryOption("homeDelivery")}
+                  className="mr-2"
+                />
+                Home delivery
+              </label>
+            </div>
+          </div>
 
           {/* Submit Button */}
           <button
