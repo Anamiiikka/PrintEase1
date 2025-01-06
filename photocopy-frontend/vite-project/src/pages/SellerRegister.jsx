@@ -4,20 +4,19 @@ import axios from "axios";
 
 const SellerRegister = () => {
   const navigate = useNavigate();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    fullname: '',
     email: '',
-    businessName: '',
+    businessname: '',
     location: '',
     password: '',
     phone: ''
   });
 
   const [errors, setErrors] = useState({
-    name: '',
+    fullname: '',
     email: '',
-    businessName: '',
+    businessname: '',
     location: '',
     password: '',
     phone: ''
@@ -33,28 +32,32 @@ const SellerRegister = () => {
     let formValid = true;
     const newErrors = { ...errors };
 
-    // Validation logic
-    if (!formData.name) {
-      newErrors.name = 'Please enter your full name';
+    // Fullname Validation
+    if (!formData.fullname) {
+      newErrors.fullname = 'Please enter your full name';
       formValid = false;
     }
 
+    // Email Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email || !emailRegex.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
       formValid = false;
     }
 
-    if (!formData.businessName) {
-      newErrors.businessName = 'Please enter your business name';
+    // Business Name Validation
+    if (!formData.businessname) {
+      newErrors.businessname = 'Please enter your business name';
       formValid = false;
     }
 
+    // Location Validation
     if (!formData.location) {
       newErrors.location = 'Please enter your location';
       formValid = false;
     }
 
+    // Password Validation
     if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters long';
       formValid = false;
@@ -72,14 +75,15 @@ const SellerRegister = () => {
     if (formValid) {
       try {
         const response = await axios.post(
-          "/api/v1/users/sellerregister", // Replace with your backend URL
+          "/api/v1/users/sellerregister", // backend URL
           formData
         );
 
         console.log("Registration successful:", response.data);
 
-        // Redirect to seller dashboard or login page after successful registration
-        navigate("/seller-login");
+      
+        // Navigate to seller dashboard
+        navigate("/seller-dashboard");
       } catch (error) {
         console.error("Error during registration:", error);
         if (error.response) {
@@ -92,28 +96,23 @@ const SellerRegister = () => {
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/public/bg.png')",
-      }}
-    >
-      <div className="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-purple-dark mb-6">Seller Register</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-purple-600 mb-6">Seller Register</h2>
         <form onSubmit={handleSubmit} id="sellerForm" className="space-y-4">
-          {/* Name */}
+          {/* Fullname */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+            <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">Full Name</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="fullname"
+              name="fullname"
+              value={formData.fullname}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               placeholder="John Doe"
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.fullname && <p className="text-red-500 text-xs mt-1">{errors.fullname}</p>}
           </div>
 
           {/* Email */}
@@ -133,17 +132,17 @@ const SellerRegister = () => {
 
           {/* Business Name */}
           <div>
-            <label htmlFor="businessName" className="block text-sm font-medium text-gray-700">Business Name</label>
+            <label htmlFor="businessname" className="block text-sm font-medium text-gray-700">Business Name</label>
             <input
               type="text"
-              id="businessName"
-              name="businessName"
-              value={formData.businessName}
+              id="businessname"
+              name="businessname"
+              value={formData.businessname}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               placeholder="Your Printing Service"
             />
-            {errors.businessName && <p className="text-red-500 text-xs mt-1">{errors.businessName}</p>}
+            {errors.businessname && <p className="text-red-500 text-xs mt-1">{errors.businessname}</p>}
           </div>
 
           {/* Location */}
@@ -193,18 +192,13 @@ const SellerRegister = () => {
 
           <button
             type="submit"
-            className="w-full bg-purple-dark text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
           >
             Create Account
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-gray-600">
-          Already have an account?{" "}
-          <a href="/seller-login" className="text-purple-600 hover:underline">
-            Sign In
-          </a>
-        </p>
+        <p className="mt-4 text-sm text-gray-600">Already have an account? <a href="/seller-login" className="text-purple-600 hover:underline">Sign In</a></p>
       </div>
     </div>
   );

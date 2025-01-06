@@ -4,11 +4,12 @@ import axios from "axios";
 
 const SellerLogin = () => {
   const navigate = useNavigate();
-  const [id, setId] = useState("");
+  const [email, setEmail] = useState("");  // Corrected state name to 'email'
   const [password, setPassword] = useState("");
   const [idError, setIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [serverError, setServerError] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     let isValid = true;
@@ -19,7 +20,7 @@ const SellerLogin = () => {
     setServerError("");
 
     // Validation
-    if (!id.includes("@")) {
+    if (!email.includes("@")) {  // Use 'email' instead of 'id'
       setIdError("Please enter a valid email address.");
       isValid = false;
     }
@@ -33,7 +34,7 @@ const SellerLogin = () => {
       try {
         const response = await axios.post(
           "/api/v1/users/sellerlogin", // Replace with your backend URL
-          { email: id, password }
+          { email, password }
         );
 
         // Handle successful login
@@ -55,9 +56,6 @@ const SellerLogin = () => {
     }
   };
 
-  //axios
-  
-
   return (
     <div className="flex items-center justify-center min-h-screen bg-cover bg-center relative bg-[url('./public/bg.png')]">
       {/* Form container */}
@@ -66,10 +64,10 @@ const SellerLogin = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <input
-              type="text"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-              placeholder="Enter your ID"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}  // Corrected to 'setEmail'
+              placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
             />
             {idError && <p className="text-red-500 text-sm mt-1">{idError}</p>}

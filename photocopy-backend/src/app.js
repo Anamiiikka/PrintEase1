@@ -13,6 +13,11 @@ app.use(express.urlencoded({extended:true,limit:"16 kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
+//payment
+const crypto = require("crypto");
+const axios = require("axios");
+
+
 //import routes
 import userRoutes from './routes/user.routes.js'
 
