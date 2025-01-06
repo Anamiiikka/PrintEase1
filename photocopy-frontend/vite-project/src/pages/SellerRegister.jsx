@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SellerRegister = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
+    fullname: '',
     email: '',
-    businessName: '',
+    businessname: '',
     location: '',
     password: '',
-    confirmPassword: ''
+    phone: ''
   });
 
   const [errors, setErrors] = useState({
-    name: '',
+    fullname: '',
     email: '',
-    businessName: '',
+    businessname: '',
     location: '',
     password: '',
-    confirmPassword: ''
+    phone: ''
   });
 
   const handleChange = (e) => {
@@ -26,74 +27,92 @@ const SellerRegister = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let formValid = true;
     const newErrors = { ...errors };
 
-    // Validation logic
-    if (!formData.name) {
-      newErrors.name = 'Please enter your full name';
+    // Fullname Validation
+    if (!formData.fullname) {
+      newErrors.fullname = 'Please enter your full name';
       formValid = false;
     }
 
+    // Email Validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email || !emailRegex.test(formData.email)) {
       newErrors.email = 'Please enter a valid email address';
       formValid = false;
     }
 
-    if (!formData.businessName) {
-      newErrors.businessName = 'Please enter your business name';
+    // Business Name Validation
+    if (!formData.businessname) {
+      newErrors.businessname = 'Please enter your business name';
       formValid = false;
     }
 
+    // Location Validation
     if (!formData.location) {
       newErrors.location = 'Please enter your location';
       formValid = false;
     }
 
+    // Password Validation
     if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters long';
       formValid = false;
     }
 
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+    // Phone Validation
+    const phoneRegex = /^[0-9]{10}$/; // Assuming a 10-digit phone number format
+    if (!formData.phone || !phoneRegex.test(formData.phone)) {
+      newErrors.phone = 'Please enter a valid 10-digit phone number';
       formValid = false;
     }
 
     setErrors(newErrors);
 
     if (formValid) {
-      console.log('Form Submitted', formData);
+      try {
+        const response = await axios.post(
+          "/api/v1/users/sellerregister", // backend URL
+          formData
+        );
+
+        console.log("Registration successful:", response.data);
+
+      
+        // Navigate to seller dashboard
+        navigate("/seller-dashboard");
+      } catch (error) {
+        console.error("Error during registration:", error);
+        if (error.response) {
+          alert(error.response.data.message || "Registration failed. Please try again.");
+        } else {
+          alert("An error occurred. Please try again later.");
+        }
+      }
     }
-    navigate("/");
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{
-        backgroundImage: "url('/public/bg.png')",
-      }}
-    >
-      <div className="bg-white bg-opacity-80 p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold text-center text-purple-dark mb-6">Seller Register</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-purple-600 mb-6">Seller Register</h2>
         <form onSubmit={handleSubmit} id="sellerForm" className="space-y-4">
-          {/* Name */}
+          {/* Fullname */}
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+            <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">Full Name</label>
             <input
               type="text"
-              id="name"
-              name="name"
-              value={formData.name}
+              id="fullname"
+              name="fullname"
+              value={formData.fullname}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               placeholder="John Doe"
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.fullname && <p className="text-red-500 text-xs mt-1">{errors.fullname}</p>}
           </div>
 
           {/* Email */}
@@ -113,17 +132,17 @@ const SellerRegister = () => {
 
           {/* Business Name */}
           <div>
-            <label htmlFor="businessName" className="block text-sm font-medium text-gray-700">Business Name</label>
+            <label htmlFor="businessname" className="block text-sm font-medium text-gray-700">Business Name</label>
             <input
               type="text"
-              id="businessName"
-              name="businessName"
-              value={formData.businessName}
+              id="businessname"
+              name="businessname"
+              value={formData.businessname}
               onChange={handleChange}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
               placeholder="Your Printing Service"
             />
-            {errors.businessName && <p className="text-red-500 text-xs mt-1">{errors.businessName}</p>}
+            {errors.businessname && <p className="text-red-500 text-xs mt-1">{errors.businessname}</p>}
           </div>
 
           {/* Location */}
@@ -141,6 +160,21 @@ const SellerRegister = () => {
             {errors.location && <p className="text-red-500 text-xs mt-1">{errors.location}</p>}
           </div>
 
+          {/* Phone */}
+          <div>
+            <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
+              placeholder="1234567890"
+            />
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
+          </div>
+
           {/* Password */}
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
@@ -156,35 +190,15 @@ const SellerRegister = () => {
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
 
-          {/* Confirm Password */}
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
-              placeholder="Confirm your password"
-            />
-            {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
-          </div>
-
           <button
             type="submit"
-            className="w-full bg-purple-dark text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
+            className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600"
           >
             Create Account
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-gray-600">
-          Already have an account?{" "}
-          <a href="/seller-login" className="text-purple-600 hover:underline">
-            Sign In
-          </a>
-        </p>
+        <p className="mt-4 text-sm text-gray-600">Already have an account? <a href="/seller-login" className="text-purple-600 hover:underline">Sign In</a></p>
       </div>
     </div>
   );
