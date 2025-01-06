@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       '/api': {
        
-        target: 'https://printease-o6ll.onrender.com/api/v1/users', // Your backend URL
+        target: 'https://printease-o6ll.onrender.com', // Your backend URL
         changeOrigin: true,  // Ensures the request is proxied correctly
         secure: false,       // Set to true if you're using HTTPS
       },
