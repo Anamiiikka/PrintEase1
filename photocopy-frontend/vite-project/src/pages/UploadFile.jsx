@@ -1,19 +1,23 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import photoIcon from '../assets/photo.jpg'; // Adjust the path based on your folder structure
+import axios from "axios";
 
 const UploadFile = () => {
   const navigate = useNavigate();
+
   const handleHomeLogin = () => {
     navigate("/"); // Go to home page
   };
+
   const handlePayment = () => {
     navigate("/payment"); // Navigate to payment page
   };
+
   const handleBuyerDashboard = () => {
     navigate("/buyer-dashboard"); // Navigate to buyer dashboard
   };
-  
+
   const [files, setFiles] = useState([]);
   const [totalFileSize, setTotalFileSize] = useState(0); // Track total file size
   const [deliveryOption, setDeliveryOption] = useState(""); // Track delivery option
@@ -47,13 +51,43 @@ const UploadFile = () => {
     setTotalFileSize(totalFileSize - fileToRemove.size);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Uploaded Files:", files);
-    console.log("Delivery Option:", deliveryOption);
-    alert("Form submitted successfully!");
-    setFiles([]); // Reset files after submission
-    setTotalFileSize(0); // Reset file size
+
+    if (files.length === 0) {
+      alert("Please upload at least one file.");
+      return;
+    }
+
+    if (!deliveryOption) {
+      alert("Please select a delivery option.");
+      return;
+    }
+
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append("files", file); // Append files to formData
+    });
+    formData.append("deliveryOption", deliveryOption); // Append delivery option to formData
+
+    try {
+      const response = await axios.post("/api/v1/users/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("Response from server:", response.data);
+      alert("Files uploaded successfully!");
+      setFiles([]); // Reset files
+      setTotalFileSize(0); // Reset file size
+      setDeliveryOption(""); // Reset delivery option
+
+      handlePayment(); // Navigate to payment page after successful upload
+    } catch (error) {
+      console.error("Error uploading files:", error);
+      alert("An error occurred while uploading files. Please try again.");
+    }
   };
 
   const handleUploadBoxClick = () => {
@@ -148,7 +182,6 @@ const UploadFile = () => {
 
           {/* Submit Button */}
           <button
-            onClick={handlePayment}
             type="submit"
             className="bg-blue-600 text-white py-2 px-4 rounded-lg mt-4 hover:bg-blue-700 w-full"
           >
