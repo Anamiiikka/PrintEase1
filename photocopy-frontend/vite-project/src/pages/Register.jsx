@@ -53,7 +53,7 @@ const Register = () => {
 
         try {
             const response = await axios.post(
-               "https://printease1.onrender.com/api/v1/users/register",
+               "/api/v1/users/register",
                 {
                     fullname: formData.name,
                     email: formData.email,
