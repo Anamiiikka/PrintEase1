@@ -1,5 +1,5 @@
-import {crypto} from 'crypto';
-import {axios} from 'axios';
+import crypto from 'crypto';
+import axios from 'axios';
 const createOrder = async (req, res) => {
     try {
         console.log(req.body);

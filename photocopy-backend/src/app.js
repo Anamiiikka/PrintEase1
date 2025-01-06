@@ -14,8 +14,7 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 //payment
-const crypto = require("crypto");
-const axios = require("axios");
+
 
 
 //import routes
