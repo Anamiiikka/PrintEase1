@@ -83,7 +83,7 @@ const SellerRegister = () => {
 
       
         // Navigate to seller dashboard
-        navigate("/seller-dashboard");
+        navigate("/seller-dashboard", { state: { seller: response.data.seller } });
       } catch (error) {
         console.error("Error during registration:", error);
         if (error.response) {
