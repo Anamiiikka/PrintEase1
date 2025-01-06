@@ -4,7 +4,7 @@ import axios from "axios";
 
 const SellerLogin = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");  // Corrected state name to 'email'
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [idError, setIdError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -14,13 +14,11 @@ const SellerLogin = () => {
     event.preventDefault();
     let isValid = true;
 
-    // Reset errors
     setIdError("");
     setPasswordError("");
     setServerError("");
 
-    // Validation
-    if (!email.includes("@")) {  // Use 'email' instead of 'id'
+    if (!email.includes("@")) {
       setIdError("Please enter a valid email address.");
       isValid = false;
     }
@@ -32,19 +30,13 @@ const SellerLogin = () => {
 
     if (isValid) {
       try {
-        const response = await axios.post(
-          "/api/v1/users/sellerlogin", // Replace with your backend URL
-          { email, password }
-        );
+        console.log("Sending request to backend...");
+        const response = await axios.post("/api/v1/users/sellerlogin", { email, password });
 
-        // Handle successful login
-        console.log("Login successful:", response.data);
+        console.log("Response from backend:", response.data);
 
-        // Store token in local storage or cookies
         localStorage.setItem("token", response.data.token);
-
-        // Navigate to seller dashboard
-        navigate("/seller-dashboard");
+        navigate("/seller-dashboard", { state: { seller: response.data.seller } });
       } catch (error) {
         console.error("Error during login:", error);
         if (error.response) {
@@ -58,7 +50,6 @@ const SellerLogin = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-cover bg-center relative bg-[url('./public/bg.png')]">
-      {/* Form container */}
       <div className="bg-white bg-opacity-80 p-8 rounded shadow-lg w-full max-w-sm z-10">
         <h2 className="text-2xl font-bold text-center mb-6">Seller Login</h2>
         <form onSubmit={handleSubmit}>
@@ -66,7 +57,7 @@ const SellerLogin = () => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}  // Corrected to 'setEmail'
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-500"
             />
@@ -89,7 +80,7 @@ const SellerLogin = () => {
               Forgot Password?
             </a>
           </div>
-          <button 
+          <button
             type="submit"
             className="w-full bg-purple-dark hover:bg-purple-p1 text-white py-2 px-4 rounded"
           >
@@ -102,6 +93,7 @@ const SellerLogin = () => {
             Register
           </a>
         </p>
+        {serverError && <p className="text-red-500 text-center mt-4">{serverError}</p>}
       </div>
     </div>
   );
