@@ -7,6 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
+        target: 'https://printease1-6yd9.onrender.com', // Your backend URL
         target: 'https://localhost:8000', // Your backend URL
         changeOrigin: true,  // Ensures the request is proxied correctly
         secure: false,       // Set to true if you're using HTTPS
