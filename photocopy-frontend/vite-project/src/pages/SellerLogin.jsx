@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -46,6 +47,15 @@ const SellerLogin = () => {
         }
       }
     }
+    const seller = {
+      name: "Jerry",
+      
+      
+    };
+
+    // Navigate to the seller dashboard with seller data
+    navigate("/seller-dashboard", { state: { seller } });
+
   };
 
   return (
