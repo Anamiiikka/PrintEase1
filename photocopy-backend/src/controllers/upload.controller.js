@@ -53,7 +53,7 @@ const sendFilesToSeller = async (files) => {
   });
 };
 
-// Delete the files from MongoDB after printout completion
+// Delete the files from MongoDB after printout completion and
 //const deleteFiles = async (files) => {
 //  try {
 //    await Promise.all(
