@@ -10,7 +10,7 @@ export default defineConfig({
        
         target: 'https://printease1-dnw1.onrender.com', // Your backend URL
         changeOrigin: true,  // Ensures the request is proxied correctly
-        secure: false,       // Set to true if you're using HTTPS
+        secure: true,       // Set to true if you're using HTTPS
       },
     },
   },
