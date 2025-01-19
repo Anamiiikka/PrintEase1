@@ -75,11 +75,14 @@ const SellerRegister = () => {
     if (formValid) {
       try {
         const response = await axios.post(
-          "/api/v1/users/sellerregister", // backend URL
+          "https://printease1-zcdn.onrender.com/api/v1/users/sellerregister", // backend URL
           formData
         );
 
         console.log("Registration successful:", response.data);
+
+        //store seller data locally
+        localStorage.setItem("seller", JSON.stringify(response.data.seller));
 
       
         // Navigate to seller dashboard

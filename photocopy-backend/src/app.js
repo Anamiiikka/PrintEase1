@@ -3,8 +3,9 @@ import cookieParser from 'cookie-parser'
 import cors from 'cors'
 const app=express();
 app.use(cors({
-    origin:process.env.CORS_ORIGIN,
+    origin:process.env.CORS_ORIGIN ||'https://print-ease1.vercel.app',
     credentials:true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 
 }))
 

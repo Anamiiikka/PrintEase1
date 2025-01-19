@@ -31,7 +31,7 @@ const SellerLogin = () => {
     if (isValid) {
       try {
         console.log("Sending request to backend...");
-        const response = await axios.post("/api/v1/users/sellerlogin", { email, password });
+        const response = await axios.post("https://printease1-zcdn.onrender.com/api/v1/users/sellerlogin", { email, password });
 
         console.log("Response from backend:", response.data);
 
