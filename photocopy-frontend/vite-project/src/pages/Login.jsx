@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
+import { useAuth } from "../components/AuthContext"; // Import Auth Context
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
@@ -10,14 +11,19 @@ const Login = () => {
     const [formError, setFormError] = useState("");
     const [loginError, setLoginError] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
+
     const navigate = useNavigate();
+    const { login } = useAuth(); // Destructure login function from AuthContext
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
         setFormError("");
+
         if (name === "password") {
-            setPasswordError(value.length >= 5 ? "" : "Password must be at least 5 characters long.");
+            setPasswordError(
+                value.length >= 5 ? "" : "Password must be at least 5 characters long."
+            );
         }
     };
 
@@ -45,7 +51,11 @@ const Login = () => {
                 { withCredentials: true }
             );
             console.log("Login Successful:", response.data);
-            alert("Login successful!");
+
+            // Update the global authentication state
+            login(); // AuthContext login function
+
+            // Redirect the user to the dashboard after successful login
             navigate("/buyer-dashboard");
         } catch (error) {
             console.error("Error:", error.response?.data || error.message);
@@ -128,7 +138,7 @@ const Login = () => {
                     </button>
                 </form>
                 <p className="mt-4 text-sm text-center text-purple-800">
-                    Don't have an account?{" "}
+                    Dont have an account?{" "}
                     <a
                         href="/register"
                         className="text-purple-600 hover:underline transform transition-all duration-300 ease-in-out hover:text-purple-800"
