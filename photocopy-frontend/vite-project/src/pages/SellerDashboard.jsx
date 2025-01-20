@@ -7,6 +7,9 @@ const SellerDashboard = () => {
 
   // Helper to safely parse JSON
   const safeParseJSON = (jsonString) => {
+    if (!jsonString) {
+      return null;
+    }
     try {
       return JSON.parse(jsonString);
     } catch (error) {
@@ -30,12 +33,11 @@ const SellerDashboard = () => {
   }, [seller, navigate]);
 
   if (!seller) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <p className="text-gray-700 text-lg">Redirecting to login...</p>
-      </div>
-    );
+    return <div>Loading...</div>; // Optional loading state
   }
+
+  
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">

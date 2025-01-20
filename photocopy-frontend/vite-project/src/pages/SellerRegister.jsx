@@ -81,6 +81,9 @@ const SellerRegister = () => {
 
         console.log("Registration successful:", response.data);
 
+        //store seller data locally
+        localStorage.setItem("seller", JSON.stringify(response.data.seller));
+
       
         // Navigate to seller dashboard
         navigate("/seller-dashboard", { state: { seller: response.data.seller } });
