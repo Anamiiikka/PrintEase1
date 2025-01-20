@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "axios";
+import axios from "../axios";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
