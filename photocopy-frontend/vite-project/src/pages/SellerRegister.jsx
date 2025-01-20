@@ -75,7 +75,7 @@ const SellerRegister = () => {
     if (formValid) {
       try {
         const response = await axios.post(
-          "/api/v1/users/sellerregister", // backend URL
+          "https://printease1-zcdn.onrender.com/api/v1/users/sellerregister", // backend URL
           formData
         );
 
