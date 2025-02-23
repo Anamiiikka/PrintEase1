@@ -1,32 +1,36 @@
-import multer from 'multer';
 import { File } from '../models/file.Model.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { uploadOnCloudinary } from '../utils/cloudinary.js';
+import { upload } from '../utils/multer.js'; // Import multer config
 
-// Multer configuration to store files temporarily in memory
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-const uploadedFiles=asyncHandler(async(req,res)=>{
-    const files=req.files?.filename[0]?.path;
-    console.log(files)
-    if(!files){
-        throw new ApiError(400,"No file uploaded")
+const uploadedFiles = asyncHandler(async (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        throw new ApiError(400, "No file uploaded");
     }
-    const fileData = await uploadOnCloudinary(files);
-    if(!fileData){
-        throw new ApiError(500,"Error in uploading file")
+
+    const uploadedFileData = [];
+
+    for (const file of req.files) {
+        const filePath = file.path; // Get file path from multer
+        const fileData = await uploadOnCloudinary(filePath); // Upload file to Cloudinary
+
+        if (!fileData) {
+            throw new ApiError(500, "Error in uploading file");
+        }
+
+        const newFile = new File({
+            filename: file.originalname,
+            contentType: file.mimetype,
+            data: fileData.url, // Store Cloudinary URL instead of binary data
+        });
+
+        await newFile.save();
+        uploadedFileData.push(newFile);
     }
-    const file = new File({
-        filename: fileData.original_filename,
-        contentType: fileData.format,
-        data: fileData.url,
-    });
-    await file.save();
-    return new ApiResponse(200, { file: fileData });
 
+    res.status(200).json(new ApiResponse(200, { files: uploadedFileData }));
+});
 
-})
 export { upload, uploadedFiles };
