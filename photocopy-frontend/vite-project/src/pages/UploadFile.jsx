@@ -71,7 +71,7 @@ const UploadFile = () => {
     formData.append("deliveryOption", deliveryOption); // Append delivery option to formData
 
     try {
-      const response = await axios.post("/api/v1/users/upload", formData, {
+      const response = await axios.post("https://printease1-zcdn.onrender.com/api/v1/users/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

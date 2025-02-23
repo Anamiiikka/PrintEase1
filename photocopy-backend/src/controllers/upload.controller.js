@@ -11,6 +11,7 @@ const upload = multer({ storage });
 
 const uploadedFiles=asyncHandler(async(req,res)=>{
     const files=req.files?.filename[0]?.path;
+    console.log(files)
     if(!files){
         throw new ApiError(400,"No file uploaded")
     }
