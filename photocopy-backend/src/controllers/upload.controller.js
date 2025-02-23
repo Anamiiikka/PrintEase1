@@ -6,6 +6,7 @@ import { uploadOnCloudinary } from '../utils/cloudinary.js';
 import { upload } from '../middleware/multer.middleware.js';
 
 const uploadedFiles = asyncHandler(async (req, res) => {
+    console.log(req.files);
     if (!req.files || req.files.length === 0) {
         throw new ApiError(400, "No file uploaded");
     }
@@ -14,6 +15,8 @@ const uploadedFiles = asyncHandler(async (req, res) => {
 
     for (const file of req.files) {
         const filePath = file.path; // Get file path from multer
+        console.log(filePath
+        );  // Print file path
         const fileData = await uploadOnCloudinary(filePath); // Upload file to Cloudinary
 
         if (!fileData) {
