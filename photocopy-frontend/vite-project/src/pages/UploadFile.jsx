@@ -77,7 +77,7 @@ const UploadFile = () => {
         },
       });
 
-      console.log("Response from server:", response.data);
+      console.log("Response from server:", response.data.url);
       alert("Files uploaded successfully!");
       setFiles([]); // Reset files
       setTotalFileSize(0); // Reset file size
