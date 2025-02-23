@@ -6,7 +6,8 @@ import { createOrder, checkOrderStatus } from '../controllers/payment.controller
 //seller
 import { registerSeller,loginSeller,logoutSeller} from '../controllers/seller.controller.js';
 //upload file
-import { uploadFilesRoute } from '../controllers/upload.controller.js';
+import { uploadedFiles } from '../controllers/upload.controller.js';
+import { upload } from '../middleware/multer.middleware.js';
 const router=Router();
 router.route("/register").post(registerUser);
 router.route("/login").post(loginUser);
@@ -14,9 +15,16 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(verifyJWT,logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
 //upload file
-router.route("/upload").post(uploadFilesRoute);
+router.route("/upload").post( upload.fields(
+    [
+        {
+            name:"filename",
+            maxCount:30
+        }
+    ]),uploadedFiles);
 //seller
-router.route("/sellerregister").post(registerSeller);
+router.route("/sellerregister").post(
+   registerSeller);
 router.route("/sellerlogin").post(loginSeller);
 router.route("/sellerlogout").post(verifyJWT,logoutSeller);
 router.route("/order").post(createOrder);
