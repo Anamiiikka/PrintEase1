@@ -3,7 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { ApiResponse } from '../utils/ApiResponse.js';
 import { uploadOnCloudinary } from '../utils/cloudinary.js';
-import { upload } from '../utils/multer.js'; // Import multer config
+import { upload } from '../middleware/multer.middleware.js';
 
 const uploadedFiles = asyncHandler(async (req, res) => {
     if (!req.files || req.files.length === 0) {
