@@ -15,10 +15,7 @@ router.route("/login").post(loginUser);
 router.route("/logout").post(verifyJWT,logoutUser);
 router.route("/refresh-token").post(refreshAccessToken);
 //upload file
-router.route("/upload").post(
-    upload.array("files", 30), // Accept up to 30 files
-    uploadedFiles
-  );
+router.route("/upload", upload.array("files"), uploadedFiles);
   
 //seller
 router.route("/sellerregister").post(
